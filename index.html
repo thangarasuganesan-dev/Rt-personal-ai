@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#087f5b">
+
+<title>RT Personal AI</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f8f6;
+    color: #142d3e;
+}
+
+header {
+    background: #087f5b;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.lang {
+    background: white;
+    color: #087f5b;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.container {
+    padding: 18px;
+    max-width: 700px;
+    margin: auto;
+}
+
+.welcome {
+    background: #102f46;
+    color: white;
+    padding: 23px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+.welcome h2 {
+    margin-top: 0;
+}
+
+.section-title {
+    font-size: 18px;
+    margin: 22px 0 14px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 13px;
+}
+
+.card {
+    background: white;
+    padding: 18px 12px;
+    border-radius: 13px;
+    border: 1px solid #e0eae5;
+    text-align: center;
+    cursor: pointer;
+    min-height: 115px;
+}
+
+.card:active {
+    background: #e2f4eb;
+}
+
+.icon {
+    font-size: 29px;
+    margin-bottom: 9px;
+}
+
+.card h3 {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.card p {
+    color: #687d83;
+    font-size: 12px;
+}
+
+.chat {
+    background: white;
+    padding: 17px;
+    border-radius: 14px;
+    margin-top: 20px;
+}
+
+.chat input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccdcd4;
+    border-radius: 9px;
+    margin-top: 10px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.send {
+    background: #087f5b;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    padding: 12px 20px;
+    margin-top: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #71827d;
+    font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🤖 RT PERSONAL AI</div>
+    <button class="lang" onclick="toggleLanguage()" id="language">
+        தமிழ்
+    </button>
+</header>
+
+<div class="container">
+
+    <div class="welcome">
+        <h2 id="welcome">Welcome to Your AI System</h2>
+        <p id="subtitle">
+            Your Personal Intelligent Assistant
+        </p>
+        <p>🟢 System Interface Ready</p>
+    </div>
+
+    <h3 class="section-title" id="services">
+        AI Services
+    </h3>
+
+    <div class="grid">
+
+        <div class="card" onclick="openSection('Personal AI')">
+            <div class="icon">🧠</div>
+            <h3 id="s1">Personal AI</h3>
+            <p id="d1">Your AI Assistant</p>
+        </div>
+
+        <div class="card" onclick="openSection('Deep Research')">
+            <div class="icon">🔍</div>
+            <h3 id="s2">Deep Research</h3>
+            <p id="d2">Multi-AI Research</p>
+        </div>
+
+        <div class="card" onclick="openSection('Trading Intelligence')">
+            <div class="icon">📈</div>
+            <h3 id="s3">Trading AI</h3>
+            <p id="d3">Market Analysis</p>
+        </div>
+
+        <div class="card" onclick="openSection('Business AI')">
+            <div class="icon">💼</div>
+            <h3 id="s4">Business AI</h3>
+            <p id="d4">Business Intelligence</p>
+        </div>
+
+        <div class="card" onclick="openSection('Global News')">
+            <div class="icon">🌍</div>
+            <h3 id="s5">Global News</h3>
+            <p id="d5">World Updates</p>
+        </div>
+
+        <div class="card" onclick="openSection('Learning Centre')">
+            <div class="icon">📚</div>
+            <h3 id="s6">Learning Centre</h3>
+            <p id="d6">Learn Every Day</p>
+        </div>
+
+        <div class="card" onclick="openSection('Knowledge Base')">
+            <div class="icon">📂</div>
+            <h3 id="s7">Knowledge Base</h3>
+            <p id="d7">Your Saved Files</p>
+        </div>
+
+        <div class="card" onclick="openSection('Automation Centre')">
+            <div class="icon">⚙️</div>
+            <h3 id="s8">Automation</h3>
+            <p id="d8">Smart Automation</p>
+        </div>
+
+    </div>
+
+    <div class="chat">
+        <h3 id="chatTitle">💬 Ask Your AI</h3>
+        <p id="chatDesc">Your AI interface will be connected soon.</p>
+        <input type="text" id="question"
+        placeholder="Type your question...">
+        <button class="send" onclick="askAI()" id="send">
+            Send
+        </button>
+        <p id="answer"></p>
+    </div>
+
+</div>
+
+<footer>
+    RT PERSONAL AI © 2026
+    <br>Built for Personal Intelligence
+</footer>
+
+<script>
+
+let tamil = false;
+
+function toggleLanguage() {
+    tamil = !tamil;
+
+    const en = {
+        welcome: "Welcome to Your AI System",
+        subtitle: "Your Personal Intelligent Assistant",
+        services: "AI Services",
+        s1: "Personal AI",
+        s2: "Deep Research",
+        s3: "Trading AI",
+        s4: "Business AI",
+        s5: "Global News",
+        s6: "Learning Centre",
+        s7: "Knowledge Base",
+        s8: "Automation",
+        d1: "Your AI Assistant",
+        d2: "Multi-AI Research",
+        d3: "Market Analysis",
+        d4: "Business Intelligence",
+        d5: "World Updates",
+        d6: "Learn Every Day",
+        d7: "Your Saved Files",
+        d8: "Smart Automation",
+        chatTitle: "💬 Ask Your AI",
+        chatDesc: "Your AI interface will be connected soon.",
+        send: "Send"
+    };
+
+    const ta = {
+        welcome: "உங்கள் AI உலகத்திற்கு வரவேற்கிறோம்",
+        subtitle: "உங்களுடைய தனிப்பட்ட AI உதவியாளர்",
+        services: "AI சேவைகள்",
+        s1: "தனிப்பட்ட AI",
+        s2: "ஆழமான ஆராய்ச்சி",
+        s3: "Trading AI",
+        s4: "Business AI",
+        s5: "உலகச் செய்திகள்",
+        s6: "கற்றல் மையம்",
+        s7: "தகவல் சேமிப்பு",
+        s8: "தானியங்கி மையம்",
+        d1: "உங்கள் AI உதவியாளர்",
+        d2: "பல AI ஆராய்ச்சி",
+        d3: "சந்தை ஆய்வு",
+        d4: "தொழில் நுண்ணறிவு",
+        d5: "உலக நிகழ்வுகள்",
+        d6: "தினமும் கற்போம்",
+        d7: "சேமித்த கோப்புகள்",
+        d8: "தானியங்கி செயல்பாடு",
+        chatTitle: "💬 உங்கள் AI-யிடம் கேளுங்கள்",
+        chatDesc: "AI இணைப்பு விரைவில் அமைக்கப்படும்.",
+        send: "அனுப்பு"
+    };
+
+    const data = tamil ? ta : en;
+
+    for (let key in data) {
+        document.getElementById(key).innerText = data[key];
+    }
+
+    document.getElementById("language").innerText =
+        tamil ? "English" : "தமிழ்";
+
+    document.getElementById("question").placeholder =
+        tamil ? "உங்கள் கேள்வியை எழுதுங்கள்..." :
+        "Type your question...";
+}
+
+function openSection(name) {
+    alert(name + " - Coming Soon!");
+}
+
+function askAI() {
+    const q = document.getElementById("question").value;
+
+    if (!q.trim()) {
+        alert("Please enter your question");
+        return;
+    }
+
+    document.getElementById("answer").innerText =
+        tamil
+        ? "AI இணைப்பு இன்னும் அமைக்கப்படவில்லை. அடுத்த கட்டத்தில் இணைப்போம்."
+        : "AI connection is not configured yet. We will connect it in the next phase.";
+}
+
+</script>
+
+</body>
+</html>
